@@ -1,0 +1,34 @@
+# baseURL
+@baseURL = http://localhost:3000
+
+###
+# Shrink URL
+POST {{ baseURL }}/shrink
+Content-Type: application/json
+
+{
+  "url": "https://www.google.com/"
+}
+
+###
+# Find Shortened Url By Id
+GET {{ baseURL }}/short/1
+Content-Type: application/json
+
+{
+  "url": "https://gian.short/1234"
+}
+
+###
+# Find Shortened Url By Date
+GET {{ baseURL }}/short/2020-07-10
+Content-Type: application/json
+
+{
+  "data": [
+    "url" : "https://gian.short/1234",
+    "url" : "https://gian.short/1235",
+    "url" : "https://gian.short/1232",
+    "url" : "https://gian.short/1238",
+  ]
+}

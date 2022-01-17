@@ -1,0 +1,129 @@
+tags:
+- name: URL
+  description: A URL Shortner API
+
+paths:
+# [POST] url
+  /url/shrink:
+    post:
+      tags:
+      - URL
+      summary: Shrinks a long url
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/send'
+      responses:
+        201:
+          description: 'Created'
+          schema:
+            $ref: '#/definitions/url'
+        400:
+          description: 'Bad Request'
+        500:
+          description: 'Server Error'
+
+# [GET] short/id
+  /url/short/{id}:
+    get:
+      tags:
+      - URL
+      summary: Find a shortened url by its id
+      parameters:
+      - name: id
+        in: path
+        description: Url Identifier
+        required: true
+        type: integer
+      responses:
+        200:
+          description: 'OK'
+          schema:
+            $ref: '#/definitions/get'
+        400:
+          description: 'Bad Request'
+        500:
+          description: 'Server Error'
+
+# [GET] short/date
+  /url/short/date/{date}:
+    get:
+      tags:
+      - URL
+      summary: Find all shortened urls given a date
+      parameters:
+      - name: date
+        in: path
+        description: Date Format (YYYY-MM-DD)
+        required: true
+        type: string
+      responses:
+        200:
+          description: 'OK'
+          schema:
+            $ref: '#/definitions/date'
+        400:
+          description: 'Bad Request'
+        500:
+          description: 'Server Error'
+
+# definitions
+definitions:
+  array:
+    type: object
+    properties:
+      short:
+        type: string
+        example: 'https://gian.short/w_tUd'
+  url:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: URL Identifier
+        format: int64
+        example: 1
+      long:
+        type: string
+        description: Long URL
+        example: 'https://www.google.com'
+      short:
+        type: string
+        description: Shortened URL
+        example: 'https://gian.short/2MQ_R'
+      craetedAt:
+        type: string
+        description: Created registry
+        example: '2022-01-11'
+  send:
+    type: object
+    properties:
+      long: 
+        type: string
+        description: Long URL to be shortened
+        example: 'https://www.google.com'
+  get:
+    type: object
+    properties:
+      url:
+        type: string
+        description: Return a shortened URL
+        example: 'https://gian.short/w_tUd'
+  date:
+    type: object
+    properties:
+      data:
+        type: array
+        items:
+          $ref: '#/definitions/array'
+            
+        
+
+
+      
+
+schemes:
+ - https
+ - http
